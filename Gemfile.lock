@@ -10,7 +10,6 @@ GEM
     business_time (0.7.3)
       activesupport (>= 3.1.0)
       tzinfo
-    color (1.7.1)
     haml (4.0.6)
       tilt
     i18n (0.7.0)
@@ -37,8 +36,8 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   business_time
-  color
   haml
+  i18n
   icalendar (~> 2.2.2)
   puma
   sinatra

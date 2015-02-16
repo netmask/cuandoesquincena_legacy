@@ -14,7 +14,7 @@ helpers do
             when 0..3 then 'green'
             end
 
-    "<div class='#{style}'> #{days} </div>"
+    "<div class='#{style} days-left'> #{days} </div>"
   end
 end
 
@@ -25,6 +25,10 @@ class Quincena
 
   def left_days
     (next_pay_date - Date.today).to_i
+  end
+
+  def weekends_left
+   (Date.today..next_pay_date).to_a.select{ |day| NO_WORK_DAYS.keys.include?(day.wday) }.size / 2
   end
 
   def is_today?
@@ -54,5 +58,10 @@ end
 
 get '/api', provides:[:json] do
   quincena = Quincena.new
-  {left_days: quincena.left_days, is_today: quincena.is_today?, next_pay_date: quincena.next_pay_date }.to_json
+  {
+    left_days: quincena.left_days,
+      is_today: quincena.is_today?,
+      next_pay_date: quincena.next_pay_date,
+      weekends_left: quincena.weekends_left
+  }.to_json
 end
