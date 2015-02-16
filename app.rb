@@ -1,7 +1,9 @@
 require 'active_support'
 require 'sinatra'
+require 'json'
 require 'haml'
 require 'business_time'
+
 
 helpers do
   def class_by_days(days)
@@ -48,4 +50,9 @@ end
 get '/' do
   @quincena = Quincena.new
   haml :index
+end
+
+get '/api', provides:[:json] do
+  quincena = Quincena.new
+  {left_days: quincena.left_days, is_today: quincena.is_today?, next_pay_date: quincena.next_pay_date }.to_json
 end

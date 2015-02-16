@@ -37,6 +37,12 @@
             La siguiente quincena es el
             = @quincena.next_pay_date.strftime("%A %d de %B %Y")
         .col-md-2
+      .row
+        .col-md-3
+        .col-md-6.text-center
+          %code.text-center
+            curl http://cuandoesquincena.com/api
+        .col-md-2
 
     %footer.text-center
       %p
