@@ -45,11 +45,28 @@ class Quincena
   end
 
   def weekends_left
-    (self.current_date..next_pay_date).to_a.select{ |day| NO_WORK_DAYS.keys.include?(day.wday) }.size / 2
+    (previews_pay_date..next_pay_date).to_a.select{ |day| NO_WORK_DAYS.keys.include?(day.wday) }.size / 2
   end
 
   def is_today?
     next_pay_date == Date.today
+  end
+
+  def past_month
+    self.current_date.month - 1 == 0 ? 12 : (self.current_date.month - 1)
+  end
+
+  def previews_pay_date
+    month = past_canonical_day == -1 ? past_month : self.current_date.month
+
+    canonical = Date.civil(self.current_date.year, month , past_canonical_day)
+
+    if NO_WORK_DAYS.keys.include?(canonical.wday)
+      canonical = Date.civil(self.current_date.year, month, past_canonical_day - NO_WORK_DAYS[canonical.wday])
+    end
+
+    canonical
+
   end
 
   def next_pay_date
@@ -64,6 +81,10 @@ class Quincena
 
   def next_canonical_day
     current_date.day > 15 ? -1 : 15
+  end
+
+  def past_canonical_day
+    current_date.day < 15 ? -1 : 15
   end
 
   def compare(quincena)
