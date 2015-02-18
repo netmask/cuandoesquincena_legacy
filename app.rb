@@ -16,6 +16,17 @@ helpers do
 
     "<div class='#{style} days-left'> #{days} </div>"
   end
+
+  def class_for_times(quincena)
+    style = case quincena.days
+            when 13..14 then 'green'
+            when 15..16 then 'orange'
+            when 16..18 then 'red'
+            end
+
+    "<option class='#{style}'> #{quincena} </option>"
+
+  end
 end
 
 class Quincena
@@ -23,12 +34,18 @@ class Quincena
   # 6 Is Sat
   NO_WORK_DAYS = {6 => 1, 0 => 2}
 
+  attr_accessor :current_date, :days
+
+  def initialize(current_date)
+    self.current_date = current_date
+  end
+
   def left_days
-    (next_pay_date - Date.today).to_i
+    (next_pay_date - self.current_date).to_i
   end
 
   def weekends_left
-   (Date.today..next_pay_date).to_a.select{ |day| NO_WORK_DAYS.keys.include?(day.wday) }.size / 2
+    (self.current_date..next_pay_date).to_a.select{ |day| NO_WORK_DAYS.keys.include?(day.wday) }.size / 2
   end
 
   def is_today?
@@ -36,32 +53,61 @@ class Quincena
   end
 
   def next_pay_date
-    date_time = DateTime.now
-    canonical = Date.civil(date_time.year, date_time.month, next_canonical_day)
+    canonical = Date.civil(self.current_date.year, self.current_date.month, next_canonical_day)
 
     if NO_WORK_DAYS.keys.include?(canonical.wday)
-      canonical = Date.civil(date_time.year, date_time.month, next_canonical_day - NO_WORK_DAYS[canonical.wday])
+      canonical = Date.civil(self.current_date.year, self.current_date.month, next_canonical_day - NO_WORK_DAYS[canonical.wday])
     end
 
     canonical
   end
 
   def next_canonical_day
-    Date.today.day > 15 ? -1 : 15
+    current_date.day > 15 ? -1 : 15
+  end
+
+  def compare(quincena)
+    self.days = (next_pay_date - quincena.next_pay_date).to_i
+  end
+
+  def to_s
+    "Quincena #{self.next_pay_date.strftime("%A %d de %B %Y")} con #{self.weekends_left} fines de semana y #{self.days} dias"
+  end
+end
+
+class DevilQuincenaCalculator
+  def year_pay_dates
+    dates = []
+    today = Date.today
+
+    (1..12).step(1) do |month_number|
+      [1, 16].each do |day|
+        quincena = Quincena.new(Date.civil(today.year, month_number, day))
+        quincena.compare(dates.last) if dates.last
+
+        dates << quincena
+      end
+    end
+
+    dates
   end
 end
 
 get '/' do
-  @quincena = Quincena.new
+  @quincena = Quincena.new Date.today
+  @year_quincenas = DevilQuincenaCalculator.new.year_pay_dates
   haml :index
 end
 
 get '/api', provides:[:json] do
-  quincena = Quincena.new
+  quincena = Quincena.new Date.today
+  year_quincenas = DevilQuincenaCalculator.new.year_pay_dates
+
   {
     left_days: quincena.left_days,
       is_today: quincena.is_today?,
       next_pay_date: quincena.next_pay_date,
-      weekends_left: quincena.weekends_left
+      weekends_left: quincena.weekends_left,
+      year_pay_dates: year_quincenas
   }.to_json
 end

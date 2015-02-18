@@ -14,6 +14,7 @@
       .green{ color: green; }
       .days-left{ font-size: 67px; }
       .yesno{ font-size: 80px; }
+      .next-pay-date .days-left{font-size: 12px; }
   %body
     %a{:href => "https://github.com/netmask/cuandoesquincena"}
       %img{:alt => "Fork me on GitHub", "data-canonical-src" => "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png", :src => "https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67", :style => "position: absolute; top: 0; right: 0; border: 0;"}/
@@ -49,6 +50,16 @@
           %h4.text-center
             La siguiente quincena es el
             = @quincena.next_pay_date.strftime("%A %d de %B %Y")
+        .col-md-2
+      .row
+        .col-md-3
+        .col-md-6
+          %h6.text-center
+            Proximas quincenas:
+            %select.form-control{multiple:true}
+              - @year_quincenas.each do |quincena|
+                .next-pay-date
+                  = class_for_times quincena
         .col-md-2
       .row
         .col-md-3
