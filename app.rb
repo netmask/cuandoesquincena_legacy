@@ -87,6 +87,10 @@ class Quincena
     current_date.day < 15 ? -1 : 15
   end
 
+  def seconds_until
+    next_pay_date.to_time.to_i - Time.now.to_i
+  end
+
   def compare(quincena)
     self.days = (next_pay_date - quincena.next_pay_date).to_i
   end

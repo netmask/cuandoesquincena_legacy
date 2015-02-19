@@ -5,6 +5,7 @@
     %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}/
     %link{ :href => "/feed", :rel => "alternate", :title => "Atom", :type => "application/atom+xml" }
     %link{:href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css", :rel=>"stylesheet"}
+    %script{:src => "countdown.js"}
     :css
       @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
       body{ font-family: 'Source Sans Pro', sans-serif; }
@@ -15,6 +16,10 @@
       .days-left{ font-size: 67px; }
       .yesno{ font-size: 80px; }
       .next-pay-date .days-left{font-size: 12px; }
+      #Stage_jbeeb_3{
+        float: none;
+        margin-left: 12% !important;;
+        margin-right: auto;}
   %body
     %a{:href => "https://github.com/netmask/cuandoesquincena"}
       %img{:alt => "Fork me on GitHub", "data-canonical-src" => "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png", :src => "https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67", :style => "position: absolute; top: 0; right: 0; border: 0;"}/
@@ -30,10 +35,27 @@
       .row
         .col-md-3
         .col-md-6
-          %h2.text-center
-            Faltan
-            = class_by_days(@quincena.left_days)
-            dias para la quincena
+          %h2.text-center.center
+            Faltan:
+            :javascript
+              var test2 = new Countdown( {
+              time: "#{@quincena.seconds_until}",
+              rangeHi: "day",
+              hideLine: 1,
+              numbers		:   {
+                            font  : "Arial",
+                            color	: "#FFFFFF",
+                            bkgd	: "#ff8f00",
+                            rounded	: 0.15,
+                            shadow	: {
+                                  x : 0,
+                                  y : 3,
+                                  s : 4,
+                                  c : "#000000",
+                                  a : 0.4
+                                  }
+                          }
+              } );
         .col-md-2
       .row
         .col-md-3
