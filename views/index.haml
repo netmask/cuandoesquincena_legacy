@@ -31,6 +31,8 @@
             Hoy es Quincena?
           %h1.text-center.yesno
             = @quincena.is_today? ? "SI!!!" : "NO!!"
+            - if !@quincena.is_today?
+              = quincena_animation
         .col-md-2
       .row
         .col-md-3

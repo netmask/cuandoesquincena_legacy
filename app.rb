@@ -27,6 +27,10 @@ helpers do
     "<option class='#{style}'> #{quincena} </option>"
 
   end
+
+  def quincena_animation
+    '<img src="http://static1.squarespace.com/static/517fecd4e4b051aa0c9066ee/t/51e40b73e4b046d0d00a0680/1373899638852/2012-02-15-651.gif?format=2500w" alt='Tunchis Tunchis Tunchis'/>'
+  end
 end
 
 class Quincena
