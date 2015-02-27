@@ -16,10 +16,15 @@
       .days-left{ font-size: 67px; }
       .yesno{ font-size: 80px; }
       .next-pay-date .days-left{font-size: 12px; }
+      .si{
+        font-size: 120px;
+        text-align: center;
+      }
       #Stage_jbeeb_3{
         float: none;
         margin-left: 12% !important;;
         margin-right: auto;}
+
   %body
     %a{:href => "https://github.com/netmask/cuandoesquincena"}
       %img{:alt => "Fork me on GitHub", "data-canonical-src" => "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png", :src => "https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67", :style => "position: absolute; top: 0; right: 0; border: 0;"}/
@@ -30,38 +35,39 @@
           %h2.text-center
             Hoy es Quincena?
           %h1.text-center.yesno
-            = @quincena.is_today? ? "SI!!!" : "NO!!"
+            = @quincena.is_today? ? "<h1 class='si'>SI!!!</h1>" : "NO!!"
         .col-md-2
-      .row
+      .row.center-block
         .col-md-2
         .col-md-6
           - if @quincena.is_today?
-            = quincena_animation
+            = quincena_animation[rand(0..1)]
         .col-md-5
-      .row
+      .row.center-block
         .col-md-3
-        .col-md-6
-          %h2.text-center.center
-            Faltan:
-            :javascript
-              var test2 = new Countdown( {
-              time: "#{@quincena.seconds_until}",
-              rangeHi: "day",
-              hideLine: 1,
-              numbers		:   {
-                            font  : "Arial",
-                            color	: "#FFFFFF",
-                            bkgd	: "#ff8f00",
-                            rounded	: 0.15,
-                            shadow	: {
-                                  x : 0,
-                                  y : 3,
-                                  s : 4,
-                                  c : "#000000",
-                                  a : 0.4
-                                  }
-                          }
-              } );
+        .col-md-6.center-block
+          - unless @quincena.is_today?
+            %h2.text-center.center
+              Faltan:
+              :javascript
+                var test2 = new Countdown( {
+                time: "#{@quincena.seconds_until}",
+                rangeHi: "day",
+                hideLine: 1,
+                numbers		:   {
+                              font  : "Arial",
+                              color	: "#FFFFFF",
+                              bkgd	: "#ff8f00",
+                              rounded	: 0.15,
+                              shadow	: {
+                                    x : 0,
+                                    y : 3,
+                                    s : 4,
+                                    c : "#000000",
+                                    a : 0.4
+                                    }
+                            }
+                } );
         .col-md-2
       .row
         .col-md-3
@@ -82,7 +88,7 @@
       .row
         .col-md-3
         .col-md-6
-          %h6.text-center
+          %h6.text-center.center-block
             Proximas quincenas:
             %select.form-control{multiple:true}
               - @year_quincenas.each do |quincena|
@@ -91,8 +97,8 @@
         .col-md-2
       .row
         .col-md-3
-        .col-md-6.text-center
-          %code.text-center
+        .col-md-6.text-center.center-block
+          %code.text-center.center-block
             curl http://cuandoesquincena.com/api
         .col-md-2
 
