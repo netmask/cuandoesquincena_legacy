@@ -4,6 +4,10 @@ require 'json'
 require 'haml'
 require 'business_time'
 
+configure :production do
+  require 'newrelic_rpm'
+end
+
 
 helpers do
   def class_by_days(days)
