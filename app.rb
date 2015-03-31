@@ -111,13 +111,14 @@ end
 
 class DevilQuincenaCalculator
   def year_pay_dates
-    dates = []
     today = Date.today
+
+    dates = [Quincena.new(Date.civil(today.year.to_i - 1, 12, 16))]
 
     (1..12).step(1) do |month_number|
       [1, 16].each do |day|
         quincena = Quincena.new(Date.civil(today.year, month_number, day))
-        quincena.compare(dates.last) if dates.last
+        quincena.compare(dates.last)
 
         dates << quincena
       end
