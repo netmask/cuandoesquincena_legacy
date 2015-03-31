@@ -66,16 +66,24 @@ class Quincena
   end
 
   def previews_pay_date
-    month = past_canonical_day == -1 ? past_month : self.current_date.month
+    month = nil
+    year = nil
 
-    canonical = Date.civil(self.current_date.year, month , past_canonical_day)
+    if past_canonical_day == -1
+      month = past_month
+      year = self.current_date.year - 1
+    else
+      month = self.current_date.month
+      year = self.current_date.year
+    end
+
+    canonical = Date.civil(year, month , past_canonical_day)
 
     if NO_WORK_DAYS.keys.include?(canonical.wday)
-      canonical = Date.civil(self.current_date.year, month, past_canonical_day - NO_WORK_DAYS[canonical.wday])
+      canonical = Date.civil(year, month, past_canonical_day - NO_WORK_DAYS[canonical.wday])
     end
 
     canonical
-
   end
 
   def next_pay_date
@@ -124,6 +132,7 @@ class DevilQuincenaCalculator
       end
     end
 
+    dates.shift
     dates
   end
 end
