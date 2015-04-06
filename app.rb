@@ -71,7 +71,7 @@ class Quincena
 
     if past_canonical_day == -1
       month = past_month
-      year = self.current_date.year - 1
+      year = past_month == 12 ? self.current_date.year - 1 : self.current_date.year
     else
       month = self.current_date.month
       year = self.current_date.year
@@ -139,6 +139,7 @@ end
 
 get '/' do
   @quincena = Quincena.new Date.today
+
   @year_quincenas = DevilQuincenaCalculator.new.year_pay_dates
   haml :index
 end
