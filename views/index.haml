@@ -36,8 +36,8 @@
             Hoy es Quincena?
           %h1.text-center.yesno
             - if @quincena.silly
-              %h1.si
-                eso quisieras!
+              %h3.si{style:"font-size: 68px"}
+                = silly_message
             - else
               = @quincena.is_today? ? "<h1 class='si'>SI!!</h1>" : "NO!!"
         .col-md-2

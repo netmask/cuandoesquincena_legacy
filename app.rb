@@ -8,8 +8,18 @@ configure :production do
   require 'newrelic_rpm'
 end
 
+SILLY_MESSAGES = ["eso quisieras!",
+                  "no hay para el abono de los zapatos!",
+                  "y el pago de Coppel?",
+                  "adivina quien va a comer maruchanes los siguientes tres dias?"]
 
 helpers do
+
+
+  def silly_message
+    SILLY_MESSAGES[rand(0..SILLY_MESSAGES.size - 1 )]
+  end
+
   def class_by_days(days)
     style = case days
             when 11..15 then 'red'
