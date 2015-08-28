@@ -8,10 +8,10 @@ configure :production do
   require 'newrelic_rpm'
 end
 
-SILLY_MESSAGES = ["eso quisieras!",
-                  "no hay para el abono de los zapatos!",
-                  "y el pago de Coppel?",
-                  "adivina quien va a comer maruchanes los siguientes tres dias?"]
+SILLY_MESSAGES = ["¡Eso quisieras!",
+                  "¡No hay para el abono de los zapatos!",
+                  "¿Y el pago de Coppel?",
+                  "Adivina: ¿Quién va a comer maruchanes los siguientes tres dias?"]
 
 helpers do
 
