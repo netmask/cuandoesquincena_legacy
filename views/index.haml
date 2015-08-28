@@ -1,7 +1,7 @@
 !!! 5
 %html
   %head
-    %title= "Cuando es Quincena"
+    %title= "¿Cuándo es Quincena?"
     %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}/
     %link{ :href => "/feed", :rel => "alternate", :title => "Atom", :type => "application/atom+xml" }
     %link{:href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css", :rel=>"stylesheet"}
@@ -33,7 +33,7 @@
         .col-md-3
         .col-md-6
           %h2.text-center
-            Hoy es Quincena?
+            ¿Hoy es Quincena?
           %h1.text-center.yesno
             - if @quincena.silly
               %h3.si{style:"font-size: 68px"}
@@ -58,12 +58,12 @@
                 time: "#{@quincena.seconds_until}",
                 rangeHi: "day",
                 hideLine: 1,
-                numbers		:   {
+                numbers    :   {
                               font  : "Arial",
-                              color	: "#FFFFFF",
-                              bkgd	: "#ff8f00",
-                              rounded	: 0.15,
-                              shadow	: {
+                              color  : "#FFFFFF",
+                              bkgd  : "#ff8f00",
+                              rounded  : 0.15,
+                              shadow  : {
                                     x : 0,
                                     y : 3,
                                     s : 4,
@@ -93,7 +93,7 @@
         .col-md-3
         .col-md-6
           %h6.text-center.center-block
-            Proximas quincenas:
+            Próximas quincenas:
             %select.form-control{multiple:true}
               - @year_quincenas.each do |quincena|
                 .next-pay-date
