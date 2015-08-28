@@ -112,6 +112,10 @@ class Quincena
     self.days = (next_pay_date - quincena.next_pay_date).to_i
   end
 
+  def silly
+    (next_pay_date.to_time.to_i - Date.today.to_time.to_i) / 60 / 60 <= 96 && current_date.wday == 5
+  end
+
   def to_s
     "Quincena #{self.next_pay_date.strftime("%A %d de %B %Y")} con #{self.weekends_left} fines de semana y #{self.days} dias"
   end
