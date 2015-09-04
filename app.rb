@@ -4,6 +4,10 @@ require 'json'
 require 'haml'
 require 'business_time'
 
+I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
+I18n.backend.load_translations
+I18n.default_locale = :es
+
 configure :production do
   require 'newrelic_rpm'
 end
@@ -127,7 +131,7 @@ class Quincena
   end
 
   def to_s
-    "Quincena #{self.next_pay_date.strftime("%A %d de %B %Y")} con #{self.weekends_left} fines de semana y #{self.days} dias"
+    "Quincena #{I18n.l(next_pay_date, format: :human)} con #{self.weekends_left} fines de semana y #{self.days} dias"
   end
 end
 
