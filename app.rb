@@ -3,6 +3,8 @@ require 'sinatra'
 require 'json'
 require 'haml'
 require 'business_time'
+require 'net/http'
+require 'uri'
 
 I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
 I18n.backend.load_translations
@@ -173,4 +175,41 @@ get '/api', provides:[:json] do
       weekends_left: quincena.weekends_left,
       year_pay_dates: year_quincenas
   }.to_json
+end
+
+get '/webhook/?' do
+  if params['hub.verify_token'] == ENV['FACEBOOK_VERIFY_TOKEN']
+    body params['hub.challenge']
+  else
+    status 404
+    body 'nothing here!'
+  end
+end
+
+post '/webhook/?' do
+  payload = JSON.parse(request.body.read)
+  payload['entry'].first['messaging'].each do | event |
+    sender = event['sender']['id']
+
+    if event['message'] && event['message']['text']
+      reply(event['message']['text'], sender)
+    end
+  end
+end
+
+
+uri = URI.parse('https://graph.facebook.com/v2.6/me/messages')
+
+def reply(text, sender)
+  request = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json'})
+  request.body = {
+      recipient: {id: sender},
+      message: { text: text }
+  }
+
+  response  = Net::HTTP.start(uri.hostname, uri.port) do |http|
+    http.request(request)
+  end
+
+  puts response
 end

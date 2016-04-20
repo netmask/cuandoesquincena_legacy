@@ -10,3 +10,10 @@ gem 'activesupport'
 gem 'puma'
 gem 'i18n'
 gem 'newrelic_rpm'
+
+group :development do
+  gem 'capistrano', '~> 3.4'
+  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano3-puma'
+end
