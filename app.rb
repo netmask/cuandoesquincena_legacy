@@ -7,6 +7,7 @@ require 'net/http'
 require 'uri'
 require 'tilt/haml'
 require 'awesome_print'
+require 'yaml'
 
 I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
 I18n.backend.load_translations
@@ -179,8 +180,11 @@ get '/api', provides:[:json] do
   }.to_json
 end
 
+secrets = YAML.load_file('./config/secrets.yml')
+ap secrets
+
 get '/webhook/?' do
-  if params['hub.verify_token'] == ENV['FACEBOOK_VERIFY_TOKEN']
+  if params['hub.verify_token'] == secrets['production']['FACEBOOK_VERIFY_TOKEN']
     body params['hub.challenge']
   else
     status 404
@@ -198,6 +202,7 @@ post '/webhook/?' do
     end
   end
 end
+
 
 
 uri = URI.parse('https://graph.facebook.com/v2.6/me/messages')
