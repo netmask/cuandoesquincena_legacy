@@ -11,6 +11,7 @@ gem 'puma'
 gem 'i18n'
 gem 'newrelic_rpm'
 gem 'awesome_print'
+gem 'telegram_bot'
 
 group :development do
   gem 'capistrano', '~> 3.4'

@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'active_support'
 require 'sinatra'
 require 'json'
@@ -8,6 +9,7 @@ require 'uri'
 require 'tilt/haml'
 require 'awesome_print'
 require 'yaml'
+require 'telegram_bot'
 
 I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
 I18n.backend.load_translations
@@ -17,13 +19,18 @@ configure :production do
   require 'newrelic_rpm'
 end
 
+secrets = YAML.load_file('./config/secrets.yml')
+
+
+bot = TelegramBot.new(token: secrets['production']['TELEGRAM_TOKEN'])
+
+
 SILLY_MESSAGES = ['¡Eso quisieras!',
                   '¡No hay para el abono de los zapatos!',
                   '¿Y el pago de Coppel?',
                   'Adivina: ¿Quién va a comer maruchanes los siguientes tres dias?']
 
 helpers do
-
 
   def silly_message
     SILLY_MESSAGES[rand(0..SILLY_MESSAGES.size - 1 )]
@@ -180,45 +187,23 @@ get '/api', provides:[:json] do
   }.to_json
 end
 
-secrets = YAML.load_file('./config/secrets.yml')
 ap secrets
 
-get '/webhook/?' do
-  if params['hub.verify_token'] == secrets['production']['FACEBOOK_VERIFY_TOKEN']
-    body params['hub.challenge']
-  else
-    status 404
-    body 'nothing here!'
-  end
-end
+Thread.new do
+  bot.get_updates(fail_silently: false) do |message|
+    puts "@#{message.from.username}: #{message.text}"
+    command = message.get_command_for(bot)
+    quincena = Quincena.new Date.today
 
-post '/webhook/?' do
-  payload = JSON.parse(request.body.read)
-  payload['entry'].first['messaging'].each do | event |
-    sender = event['sender']['id']
-
-    if event['message'] && event['message']['text']
-      reply(event['message']['text'], sender)
+    message.reply do |reply|
+      case command
+      when /cuando pagan/
+        reply.text = "#{SILLY_MESSAGES[rand(0..SILLY_MESSAGES.size - 1 )]}. La Siguiente Quincena es el, #{quincena.next_pay_date}. "
+      else
+        reply.text = "#{message.from.first_name}, have no idea what #{command.inspect} means."
+      end
+      puts "sending #{reply.text.inspect} to @#{message.from.username}"
+      reply.send_with(bot)
     end
   end
-end
-
-
-
-uri = URI.parse('https://graph.facebook.com/v2.6/me/messages')
-
-ap ENV
-
-def reply(text, sender)
-  request = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json'})
-  request.body = {
-      recipient: {id: sender},
-      message: { text: text }
-  }
-
-  response  = Net::HTTP.start(uri.hostname, uri.port) do |http|
-    http.request(request)
-  end
-
-  puts response
 end

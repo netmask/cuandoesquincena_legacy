@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9c0d7097-ae71-45ee-bd0c-06a7f18ee6f6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cuandoesquincena.iml" afterPath="$PROJECT_DIR$/.idea/cuandoesquincena.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Capfile" afterPath="$PROJECT_DIR$/Capfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.rb" afterPath="$PROJECT_DIR$/app.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/deploy.rb" afterPath="$PROJECT_DIR$/config/deploy.rb" />
-    </list>
+    <list default="true" id="9c0d7097-ae71-45ee-bd0c-06a7f18ee6f6" name="Default" comment="" />
     <ignored path="cuandoesquincena.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -378,12 +369,12 @@
       <option name="presentableId" value="Default" />
       <updated>1443117399322</updated>
       <workItem from="1460313581587" duration="1042000" />
-      <workItem from="1461105586570" duration="7442000" />
+      <workItem from="1461105586570" duration="7778000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8484000" />
+    <option name="totallyTimeSpent" value="8820000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="17" y="23" width="1436" height="877" extended-state="0" />

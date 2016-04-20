@@ -8,6 +8,10 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     awesome_print (1.6.1)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     business_time (0.7.5)
       activesupport (>= 3.1.0)
       tzinfo
@@ -27,10 +31,17 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
+    equalizer (0.0.11)
+    excon (0.49.0)
     haml (4.0.7)
       tilt
     i18n (0.7.0)
     icalendar (2.2.2)
+    ice_nine (0.11.2)
     json (1.8.3)
     minitest (5.8.4)
     net-scp (1.2.1)
@@ -49,10 +60,18 @@ GEM
     sshkit (1.9.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    telegram_bot (0.0.5)
+      excon (>= 0.30.0)
+      virtus (>= 1.0.0)
     thread_safe (0.3.5)
     tilt (2.0.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
   ruby
@@ -72,6 +91,7 @@ DEPENDENCIES
   newrelic_rpm
   puma
   sinatra
+  telegram_bot
 
 BUNDLED WITH
    1.11.2
