@@ -198,7 +198,7 @@ Thread.new do
     message.reply do |reply|
       case command
       when /cuando pagan/
-        reply.text = "#{SILLY_MESSAGES[rand(0..SILLY_MESSAGES.size - 1 )]}. La Siguiente Quincena es el, #{quincena.next_pay_date}. "
+        reply.text = "#{SILLY_MESSAGES[rand(0..SILLY_MESSAGES.size - 1 )]}. La Siguiente Quincena es el, #{quincena.next_pay_date}. osea que faltan #{quincena.left_days} dias"
       else
         reply.text = "#{message.from.first_name}, have no idea what #{command.inspect} means."
       end
