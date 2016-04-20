@@ -7,6 +7,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    awesome_print (1.6.1)
     business_time (0.7.5)
       activesupport (>= 3.1.0)
       tzinfo
@@ -55,6 +56,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  awesome_print
   business_time
   capistrano (~> 3.4)
   capistrano-bundler (~> 1.1.2)

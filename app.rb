@@ -5,6 +5,8 @@ require 'haml'
 require 'business_time'
 require 'net/http'
 require 'uri'
+require 'tilt/haml'
+require 'awesome_print'
 
 I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
 I18n.backend.load_translations
@@ -14,10 +16,10 @@ configure :production do
   require 'newrelic_rpm'
 end
 
-SILLY_MESSAGES = ["¡Eso quisieras!",
-                  "¡No hay para el abono de los zapatos!",
-                  "¿Y el pago de Coppel?",
-                  "Adivina: ¿Quién va a comer maruchanes los siguientes tres dias?"]
+SILLY_MESSAGES = ['¡Eso quisieras!',
+                  '¡No hay para el abono de los zapatos!',
+                  '¿Y el pago de Coppel?',
+                  'Adivina: ¿Quién va a comer maruchanes los siguientes tres dias?']
 
 helpers do
 
@@ -199,6 +201,8 @@ end
 
 
 uri = URI.parse('https://graph.facebook.com/v2.6/me/messages')
+
+ap ENV
 
 def reply(text, sender)
   request = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json'})

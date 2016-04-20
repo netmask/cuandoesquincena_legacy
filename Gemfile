@@ -10,6 +10,7 @@ gem 'activesupport'
 gem 'puma'
 gem 'i18n'
 gem 'newrelic_rpm'
+gem 'awesome_print'
 
 group :development do
   gem 'capistrano', '~> 3.4'
