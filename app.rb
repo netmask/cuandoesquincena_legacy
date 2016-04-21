@@ -186,24 +186,3 @@ get '/api', provides:[:json] do
       year_pay_dates: year_quincenas
   }.to_json
 end
-
-
-
-Thread.new do
-  bot.get_updates(fail_silently: false) do |message|
-    puts "@#{message.from.username}: #{message.text}"
-    command = message.get_command_for(bot)
-    quincena = Quincena.new Date.today
-
-    message.reply do |reply|
-      case command
-      when /cuando pagan/
-        reply.text = "#{SILLY_MESSAGES[rand(0..SILLY_MESSAGES.size - 1 )]}. La Siguiente Quincena es el, #{quincena.next_pay_date}. osea que faltan #{quincena.left_days} dias"
-      else
-        reply.text = "#{message.from.first_name}, have no idea what #{command.inspect} means."
-      end
-      puts "sending #{reply.text.inspect} to @#{message.from.username}"
-      reply.send_with(bot)
-    end
-  end
-end
