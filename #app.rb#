@@ -187,9 +187,9 @@ get '/api', provides:[:json] do
   }.to_json
 end
 
+ap secrets
 
-
-Thread.new do
+Thread.new do 
   bot.get_updates(fail_silently: false) do |message|
     puts "@#{message.from.username}: #{message.text}"
     command = message.get_command_for(bot)
