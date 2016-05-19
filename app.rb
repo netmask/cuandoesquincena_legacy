@@ -19,10 +19,7 @@ configure :production do
   require 'newrelic_rpm'
 end
 
-secrets = YAML.load_file('./config/secrets.yml')
 
-
-bot = TelegramBot.new(token: secrets['production']['TELEGRAM_TOKEN'])
 
 
 SILLY_MESSAGES = ['¡Eso quisieras!',
