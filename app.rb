@@ -19,8 +19,7 @@ configure :production do
   require 'newrelic_rpm'
 end
 
-
-
+secrets = YAML.load_file('./config/secrets.yml')
 
 SILLY_MESSAGES = ['¡Eso quisieras!',
                   '¡No hay para el abono de los zapatos!',
