@@ -10,6 +10,7 @@ require 'tilt/haml'
 require 'awesome_print'
 require 'yaml'
 require 'telegram_bot'
+require 'icalendar'
 
 I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
 I18n.backend.load_translations
@@ -166,7 +167,26 @@ get '/' do
   @quincena = Quincena.new Date.today
 
   @year_quincenas = DevilQuincenaCalculator.new.year_pay_dates
+
   haml :index
+end
+
+get '/quincenas.ics' do
+  content_type 'text/calendar'
+
+  calendar = Icalendar::Calendar.new
+
+  year_quincenas = DevilQuincenaCalculator.new.year_pay_dates
+
+  year_quincenas.each do | quincena |
+    event = calendar.event do |e|
+      e.dtstart = Icalendar::Values::Date.new(quincena.next_pay_date)
+      e.summary = "Quincena de #{quincena.days} dias."
+    end
+  end
+
+  calendar.publish
+  calendar.to_ical
 end
 
 get '/api', provides:[:json] do

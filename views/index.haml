@@ -83,6 +83,14 @@
         .col-md-2
       .row
         .col-md-3
+        .col-md-6.text-center.center-block
+          .text-center.center-block
+            Agrega a tu
+            %a{href: '/quincenas.ics'}
+              calendario
+        .col-md-2
+      .row
+        .col-md-3.text-center.center-block
         .col-md-6
           %h6.text-center.center-block
             Próximas quincenas:
@@ -92,7 +100,7 @@
                   = class_for_times quincena
         .col-md-2
       .row
-        .col-md-3
+        .col-md-3.text-center.center-block
         .col-md-6.text-center.center-block
           %code.text-center.center-block
             curl http://cuandoesquincena.com/api
