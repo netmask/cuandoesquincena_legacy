@@ -195,9 +195,10 @@ get '/api', provides:[:json] do
 
   {
     left_days: quincena.left_days,
-      is_today: quincena.is_today?,
-      next_pay_date: quincena.next_pay_date,
-      weekends_left: quincena.weekends_left,
-      year_pay_dates: year_quincenas
+    is_today: quincena.is_today?,
+    next_pay_date: quincena.next_pay_date,
+    next_pay_date_timestamp: quincena.next_pay_date.to_time.to_i,
+    weekends_left: quincena.weekends_left,
+    year_pay_dates: year_quincenas
   }.to_json
 end
